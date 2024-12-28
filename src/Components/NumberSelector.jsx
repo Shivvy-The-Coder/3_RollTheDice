@@ -1,10 +1,13 @@
-import React, { useState } from "react";
 import styled from "styled-components"
 
-const NumberSelector = () => {
+const NumberSelector = ({setError,setSelectedNumber,selectedNumber,error}) => {
 
     const array=[1,2,3,4,5,6];
-    const [selectedNumber , setSelectedNumber] = useState(null);
+
+    const NumberSelectorHandle=(number)=>{
+      setSelectedNumber(number)
+      setError("")
+    }
 
     // creating a usestate hook soo  that we user can select the number
 
@@ -13,12 +16,13 @@ const NumberSelector = () => {
     
     <NumberSelectorContainer>
 
+      <p className="error">{error}</p>
     <div className="flex">
       {
         array.map((number,index) => (
         <Box
         isSelected={selectedNumber==number}
-        key={index} onClick={()=>setSelectedNumber(number)}>
+        key={index} onClick={()=>NumberSelectorHandle(number)}>
           {number}</Box>
           ))}
     </div>
@@ -42,6 +46,11 @@ const NumberSelectorContainer= styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
+
+  .error
+  {
+    color: red;
+  }
 `;
 
 
