@@ -4,6 +4,7 @@ import Score from "./TotalScore"
 import styled from "styled-components"
 import React,{useState} from "react"
 import { Button } from "../styled/button"
+import Rules from "./Rules"
 
 const GamePlay = () => {
   const [selectedNumber , setSelectedNumber] = useState(null); 
@@ -19,9 +20,12 @@ const GamePlay = () => {
   const rollDice=()=>{
     if(!selectedNumber) {
       setError("YOu have not selected any Number")
-      return;}
+      return;
+    }
+    setError("");
+
     const randomNumber=generateRandomNumber(1,7);
-    setCurrentDice((prev)=>randomNumber);
+    setCurrentDice(randomNumber);
 
     if(selectedNumber==randomNumber)
       setScore((prev)=>prev+randomNumber);
@@ -31,7 +35,9 @@ const GamePlay = () => {
     setSelectedNumber(undefined);
   };
 
-
+const resetScore=()=>{
+  setScore(0);
+}
 
   return (
     <main>  
@@ -43,9 +49,14 @@ const GamePlay = () => {
         <RollDice currentDice={currentDice} rollDice={rollDice}/>
 
          <div className="btns">
-          <Button>Rest Score</Button>
+          <Button onClick={resetScore}>Rest Score</Button>
           <Button>Show Rules</Button>
         </div> 
+
+        <div style={{ padding: '5vh', display:'flex' ,justifyContent:'center' }}>
+
+        <Rules/>
+        </div>
       </Main>
     </main>
   )
